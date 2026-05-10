@@ -91,15 +91,6 @@ export default function App() {
         {/* Hero Section */}
         <section className="relative pt-24 pb-16 md:pt-48 md:pb-32 px-6 md:px-12">
           <div className="max-w-5xl mx-auto flex flex-col items-center text-center gap-10">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="flex items-center gap-3 px-4 py-2 border border-mercury-ink/10 rounded-full bg-mercury-ink/[0.02]"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-mercury-accent animate-pulse" />
-              <span className="text-[10px] font-mono uppercase tracking-[0.3em] font-bold">Procedural Intelligence Engine v1.0</span>
-            </motion.div>
-
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
