@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  
+  --color-mercury-bg: #E4E3E0;
+  --color-mercury-ink: #141414;
+  --color-mercury-accent: #3B82F6;
+  --color-mercury-line: rgba(20, 20, 20, 0.1);
+}
+
+@layer base {
+  body {
+    @apply bg-mercury-bg text-mercury-ink font-sans antialiased;
+  }
+}
+
+.brutal-grid {
+  background-image: 
+    linear-gradient(to right, var(--color-mercury-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-mercury-line) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
