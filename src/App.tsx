@@ -1,9 +1,18 @@
 import { motion } from "motion/react";
 import { ArrowRight, Box, Layers, MousePointer2, Shield, Zap, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeFeature, setActiveFeature] = useState(0);
+  const [hoveredFeature, setHoveredFeature] = useState<number | null>(null);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveFeature((prev) => (prev + 1) % 3);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -186,21 +195,26 @@ export default function App() {
                 { title: "Logic Extraction", desc: "AI-driven mapping of complex unstructured procedures into interactive graph nodes.", icon: <Box size={22} /> },
                 { title: "Visual Simulations", desc: "Interactive digital rehearsals that allow teams to practice high-stakes tasks safely.", icon: <Zap size={22} /> },
                 { title: "Integrity Guard", desc: "Automated compliance checks that ensure every operation follows exact specifications.", icon: <Shield size={22} /> },
-              ].map((feature, i) => (
-                <motion.div 
-                  key={i}
-                  variants={itemVariants}
-                  initial="hidden"
-                  whileInView="visible"
-                  className="flex flex-col items-center text-center group"
-                >
-                  <div className="w-16 h-16 bg-mercury-ink/5 text-mercury-ink rounded-2xl flex items-center justify-center mb-8 group-hover:bg-mercury-accent group-hover:text-white transition-all duration-500 transform group-hover:rotate-6">
-                    {feature.icon}
-                  </div>
-                  <h3 className="font-display font-bold text-xl mb-4 uppercase tracking-tight">{feature.title}</h3>
-                  <p className="text-sm text-mercury-ink/50 leading-relaxed">{feature.desc}</p>
-                </motion.div>
-              ))}
+              ].map((feature, i) => {
+                const isActive = hoveredFeature !== null ? hoveredFeature === i : activeFeature === i;
+                return (
+                  <motion.div 
+                    key={i}
+                    variants={itemVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    onMouseEnter={() => setHoveredFeature(i)}
+                    onMouseLeave={() => setHoveredFeature(null)}
+                    className="flex flex-col items-center text-center group cursor-pointer"
+                  >
+                    <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-8 transition-all duration-500 transform ${isActive ? 'bg-mercury-accent text-white rotate-6 scale-110 shadow-lg shadow-mercury-accent/20' : 'bg-mercury-ink/5 text-mercury-ink'}`}>
+                      {feature.icon}
+                    </div>
+                    <h3 className={`font-display font-bold text-xl mb-4 uppercase tracking-tight transition-colors duration-500 ${isActive ? 'text-mercury-accent' : 'text-mercury-ink'}`}>{feature.title}</h3>
+                    <p className="text-sm text-mercury-ink/50 leading-relaxed">{feature.desc}</p>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </section>
